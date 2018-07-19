@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.wanglinet.mapper.AccountOrgMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.wanglinet.entity.AccountOrg" >
+    <id column="accountorg_id" property="id" jdbcType="BIGINT" />
+    <result column="accountorg_name" property="name" jdbcType="VARCHAR" />
+    <result column="accountorg_parent_id" property="parentId" jdbcType="BIGINT" />
+    <result column="accountorg_parent_ids" property="parentIds" jdbcType="VARCHAR" />
+    <result column="accountorg_enable" property="enable" jdbcType="BIT" />
+    <result column="accountorg_create_person_id" property="createPersonId" jdbcType="BIGINT" />
+    <result column="accountorg_create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="accountorg_update_person_id" property="updatePersonId" jdbcType="BIGINT" />
+    <result column="accountorg_update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="accountorg_type" property="type" jdbcType="SMALLINT" />
+    <result column="accountorg_stop_cause" property="stopCause" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    accountorg.id as accountorg_id, accountorg.name as accountorg_name, accountorg.parent_id as accountorg_parent_id, 
+    accountorg.parent_ids as accountorg_parent_ids, accountorg.enable as accountorg_enable, 
+    accountorg.create_person_id as accountorg_create_person_id, accountorg.create_time as accountorg_create_time, 
+    accountorg.update_person_id as accountorg_update_person_id, accountorg.update_time as accountorg_update_time, 
+    accountorg.type as accountorg_type, accountorg.stop_cause as accountorg_stop_cause
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.com.wanglinet.entity.AccountOrgExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from account_org accountorg
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from account_org accountorg
+    where accountorg.id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from account_org
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.com.wanglinet.entity.AccountOrgExample" >
+    delete from account_org accountorg
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.com.wanglinet.entity.AccountOrg" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into account_org (id, name, parent_id, 
+      parent_ids, enable, create_person_id, 
+      create_time, update_person_id, update_time, 
+      type, stop_cause)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{parentId,jdbcType=BIGINT}, 
+      #{parentIds,jdbcType=VARCHAR}, #{enable,jdbcType=BIT}, #{createPersonId,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updatePersonId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{type,jdbcType=SMALLINT}, #{stopCause,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.wanglinet.entity.AccountOrg" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into account_org
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      id,
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="parentIds != null" >
+        parent_ids,
+      </if>
+      <if test="enable != null" >
+        enable,
+      </if>
+      <if test="createPersonId != null" >
+        create_person_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updatePersonId != null" >
+        update_person_id,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="stopCause != null" >
+        stop_cause,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=BIGINT},
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="parentIds != null" >
+        #{parentIds,jdbcType=VARCHAR},
+      </if>
+      <if test="enable != null" >
+        #{enable,jdbcType=BIT},
+      </if>
+      <if test="createPersonId != null" >
+        #{createPersonId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatePersonId != null" >
+        #{updatePersonId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=SMALLINT},
+      </if>
+      <if test="stopCause != null" >
+        #{stopCause,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.com.wanglinet.entity.AccountOrgExample" resultType="java.lang.Integer" >
+    select count(*) from account_org accountorg
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update account_org accountorg
+    <set >
+      <if test="record.id != null" >
+        accountorg.id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.name != null" >
+        accountorg.name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentId != null" >
+        accountorg.parent_id = #{record.parentId,jdbcType=BIGINT},
+      </if>
+      <if test="record.parentIds != null" >
+        accountorg.parent_ids = #{record.parentIds,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enable != null" >
+        accountorg.enable = #{record.enable,jdbcType=BIT},
+      </if>
+      <if test="record.createPersonId != null" >
+        accountorg.create_person_id = #{record.createPersonId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createTime != null" >
+        accountorg.create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatePersonId != null" >
+        accountorg.update_person_id = #{record.updatePersonId,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateTime != null" >
+        accountorg.update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.type != null" >
+        accountorg.type = #{record.type,jdbcType=SMALLINT},
+      </if>
+      <if test="record.stopCause != null" >
+        accountorg.stop_cause = #{record.stopCause,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update account_org accountorg
+    set accountorg.id = #{record.id,jdbcType=BIGINT},
+      accountorg.name = #{record.name,jdbcType=VARCHAR},
+      accountorg.parent_id = #{record.parentId,jdbcType=BIGINT},
+      accountorg.parent_ids = #{record.parentIds,jdbcType=VARCHAR},
+      accountorg.enable = #{record.enable,jdbcType=BIT},
+      accountorg.create_person_id = #{record.createPersonId,jdbcType=BIGINT},
+      accountorg.create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      accountorg.update_person_id = #{record.updatePersonId,jdbcType=BIGINT},
+      accountorg.update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      accountorg.type = #{record.type,jdbcType=SMALLINT},
+      accountorg.stop_cause = #{record.stopCause,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.wanglinet.entity.AccountOrg" >
+    update account_org
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="parentIds != null" >
+        parent_ids = #{parentIds,jdbcType=VARCHAR},
+      </if>
+      <if test="enable != null" >
+        enable = #{enable,jdbcType=BIT},
+      </if>
+      <if test="createPersonId != null" >
+        create_person_id = #{createPersonId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatePersonId != null" >
+        update_person_id = #{updatePersonId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=SMALLINT},
+      </if>
+      <if test="stopCause != null" >
+        stop_cause = #{stopCause,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.com.wanglinet.entity.AccountOrg" >
+    update account_org
+    set name = #{name,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=BIGINT},
+      parent_ids = #{parentIds,jdbcType=VARCHAR},
+      enable = #{enable,jdbcType=BIT},
+      create_person_id = #{createPersonId,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_person_id = #{updatePersonId,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      type = #{type,jdbcType=SMALLINT},
+      stop_cause = #{stopCause,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

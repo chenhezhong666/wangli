@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.wanglinet.mapper.AccountUserMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.wanglinet.entity.AccountUser" >
+    <id column="accountuser_id" property="id" jdbcType="BIGINT" />
+    <result column="accountuser_username" property="username" jdbcType="VARCHAR" />
+    <result column="accountuser_password" property="password" jdbcType="VARCHAR" />
+    <result column="accountuser_salt" property="salt" jdbcType="VARCHAR" />
+    <result column="accountuser_enable" property="enable" jdbcType="BIT" />
+    <result column="accountuser_email" property="email" jdbcType="VARCHAR" />
+    <result column="accountuser_mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="accountuser_real_name" property="realName" jdbcType="VARCHAR" />
+    <result column="accountuser_employee_type" property="employeeType" jdbcType="BIT" />
+    <result column="accountuser_employee_number" property="employeeNumber" jdbcType="VARCHAR" />
+    <result column="accountuser_nid_no" property="nidNo" jdbcType="VARCHAR" />
+    <result column="accountuser_create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="accountuser_update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    accountuser.id as accountuser_id, accountuser.username as accountuser_username, accountuser.password as accountuser_password, 
+    accountuser.salt as accountuser_salt, accountuser.enable as accountuser_enable, accountuser.email as accountuser_email, 
+    accountuser.mobile as accountuser_mobile, accountuser.real_name as accountuser_real_name, 
+    accountuser.employee_type as accountuser_employee_type, accountuser.employee_number as accountuser_employee_number, 
+    accountuser.nid_no as accountuser_nid_no, accountuser.create_time as accountuser_create_time, 
+    accountuser.update_time as accountuser_update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.com.wanglinet.entity.AccountUserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from account_user accountuser
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from account_user accountuser
+    where accountuser.id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from account_user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.com.wanglinet.entity.AccountUserExample" >
+    delete from account_user accountuser
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.com.wanglinet.entity.AccountUser" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into account_user (id, username, password, 
+      salt, enable, email, mobile, 
+      real_name, employee_type, employee_number, 
+      nid_no, create_time, update_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{salt,jdbcType=VARCHAR}, #{enable,jdbcType=BIT}, #{email,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{realName,jdbcType=VARCHAR}, #{employeeType,jdbcType=BIT}, #{employeeNumber,jdbcType=VARCHAR}, 
+      #{nidNo,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.wanglinet.entity.AccountUser" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into account_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      id,
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="salt != null" >
+        salt,
+      </if>
+      <if test="enable != null" >
+        enable,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="realName != null" >
+        real_name,
+      </if>
+      <if test="employeeType != null" >
+        employee_type,
+      </if>
+      <if test="employeeNumber != null" >
+        employee_number,
+      </if>
+      <if test="nidNo != null" >
+        nid_no,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=BIGINT},
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null" >
+        #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="enable != null" >
+        #{enable,jdbcType=BIT},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null" >
+        #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeType != null" >
+        #{employeeType,jdbcType=BIT},
+      </if>
+      <if test="employeeNumber != null" >
+        #{employeeNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="nidNo != null" >
+        #{nidNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.com.wanglinet.entity.AccountUserExample" resultType="java.lang.Integer" >
+    select count(*) from account_user accountuser
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update account_user accountuser
+    <set >
+      <if test="record.id != null" >
+        accountuser.id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.username != null" >
+        accountuser.username = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null" >
+        accountuser.password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salt != null" >
+        accountuser.salt = #{record.salt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enable != null" >
+        accountuser.enable = #{record.enable,jdbcType=BIT},
+      </if>
+      <if test="record.email != null" >
+        accountuser.email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobile != null" >
+        accountuser.mobile = #{record.mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.realName != null" >
+        accountuser.real_name = #{record.realName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employeeType != null" >
+        accountuser.employee_type = #{record.employeeType,jdbcType=BIT},
+      </if>
+      <if test="record.employeeNumber != null" >
+        accountuser.employee_number = #{record.employeeNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nidNo != null" >
+        accountuser.nid_no = #{record.nidNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        accountuser.create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        accountuser.update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update account_user accountuser
+    set accountuser.id = #{record.id,jdbcType=BIGINT},
+      accountuser.username = #{record.username,jdbcType=VARCHAR},
+      accountuser.password = #{record.password,jdbcType=VARCHAR},
+      accountuser.salt = #{record.salt,jdbcType=VARCHAR},
+      accountuser.enable = #{record.enable,jdbcType=BIT},
+      accountuser.email = #{record.email,jdbcType=VARCHAR},
+      accountuser.mobile = #{record.mobile,jdbcType=VARCHAR},
+      accountuser.real_name = #{record.realName,jdbcType=VARCHAR},
+      accountuser.employee_type = #{record.employeeType,jdbcType=BIT},
+      accountuser.employee_number = #{record.employeeNumber,jdbcType=VARCHAR},
+      accountuser.nid_no = #{record.nidNo,jdbcType=VARCHAR},
+      accountuser.create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      accountuser.update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.wanglinet.entity.AccountUser" >
+    update account_user
+    <set >
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null" >
+        salt = #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="enable != null" >
+        enable = #{enable,jdbcType=BIT},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null" >
+        real_name = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeType != null" >
+        employee_type = #{employeeType,jdbcType=BIT},
+      </if>
+      <if test="employeeNumber != null" >
+        employee_number = #{employeeNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="nidNo != null" >
+        nid_no = #{nidNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.com.wanglinet.entity.AccountUser" >
+    update account_user
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      salt = #{salt,jdbcType=VARCHAR},
+      enable = #{enable,jdbcType=BIT},
+      email = #{email,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      real_name = #{realName,jdbcType=VARCHAR},
+      employee_type = #{employeeType,jdbcType=BIT},
+      employee_number = #{employeeNumber,jdbcType=VARCHAR},
+      nid_no = #{nidNo,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

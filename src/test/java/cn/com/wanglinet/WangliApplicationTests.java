@@ -18,7 +18,7 @@ public class WangliApplicationTests {
 	@Test
 	public void contextLoads() {
 		AccountUser accountUser = accountUserMapper.selectByPrimaryKey(56l);
-		System.out.println(accountUser.getUsername());
+		System.out.println(accountUser.getUsername()+"success");
 	}
 
 }
